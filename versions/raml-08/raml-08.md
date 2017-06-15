@@ -1,6 +1,5 @@
 RAML&trade; Version 0.8: RESTful API Modeling Language
-===================================
-
+==================================
 
 Abstract
 --------
@@ -16,7 +15,7 @@ This specification describes RAML. RAML is a human-readable and machine process-
 Conventions
 -----------
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119](https://www.ietf.org/rfc/rfc2119.txt).
 
 Overview
 --------
@@ -29,12 +28,10 @@ RAML also introduces the innovative concept of resource types and traits for cha
 
 This RAML Specification is organized as follows:
 
-* **Basic Information.** Explains how to describe core aspects of a RESTful API, such as is name, title, and location.
+* **Basic Information.** Explains how to describe core aspects of a RESTful API, such as its name, title, and location.
 * **User Documentation.** Describes how to include supporting documentation for the RESTful API.
 * **Resource Types and Traits.** Describes the optional mechanism for using RAML resource types and traits to characterize resources so as to avoid unnecessary repetition in the RESTful API's definition.
 * **Resources.** Describes how to specify a RESTful API's resources, resources' methods and schema, and the interactions between resources.
-
-RAML is a trademark of MuleSoft, Inc.
 
 ### Terminology
 
@@ -128,6 +125,7 @@ If the included file has one of the following media types:
 or a *.raml* or *.yml* or *.yaml* extension, RAML parsers MUST parse the content the file as RAML content and append the parsed structures to the RAML document's node.
 
 The location of the file to be included, that is, the right-hand side of !include, must be static, that is, it cannot contain any resource type or trait parameters. This will be reconsidered for future versions of RAML.
+
 Named Parameters
 ----------------
 
@@ -288,12 +286,11 @@ If the *baseUri* value is a Level 1 Template URI, the following reserved base UR
 
 Any other URI template variables appearing in the *baseUri* MAY be described explicitly within a *baseUriParameters* property at the root
 of the API definition. The properties of the *baseUriParameters* property are described in the
-Named Parameters section of this specification.
+[Named Parameters section](#named-parameters) of this specification.
 
 If a URI template variable in the base URI is not explicitly described in a *baseUriParameters* property,
 and is not specified in a resource-level *baseUriParameters* property,
-it MUST still be treated as a base URI parameter with defaults as specified in the Named Parameters
-section of this specification. Its type is "string", it is required, and its displayName is its name
+it MUST still be treated as a base URI parameter with defaults as specified in the [Named Parameters section](#named-parameters) of this specification. Its type is "string", it is required, and its displayName is its name
 (i.e. without the surrounding curly brackets [{] and [}]).
 
 The following example RAML API definition uses a Level 1 Template URI as the *baseUri*.
@@ -319,7 +316,7 @@ baseUriParameters:
 
 ### Protocols
 (Optional)
-A RESTful API can be reached HTTP, HTTPS, or both. The *protocols* property MAY be used to specify the protocols that an API supports. If the *protocols* property is not specified, the protocol specified at the *baseUri* property is used. The *protocols* property MUST be an array of strings, of values __"HTTP"__ and/or __"HTTPS"__.
+A RESTful API can be reached via HTTP, HTTPS, or both. The *protocols* property MAY be used to specify the protocols that an API supports. If the *protocols* property is not specified, the protocol specified at the *baseUri* property is used. The *protocols* property MUST be an array of strings, of values __"HTTP"__ and/or __"HTTPS"__.
 
 ```yaml
 #%RAML 0.8
@@ -514,7 +511,7 @@ baseUri: https://app.zencoder.com/api/{version}
 
 The values matched by URI parameters cannot contain slash (/) characters, in order to avoid ambiguous matching. In the example above, a URI (relative to the baseUri) of "/jobs/123" matches the "/{jobId}" resource nested within the "/jobs" resource, but a URI of "/jobs/123/x" does not match any of those resources.
 
-A resource MAY contain a *uriParameters* property specifying the uriParameters in that resource's relative URI, as described in the Named Parameters section of this specification. The example below shows two top-level resources (/user and /users) and a nested resource specified by its template URI, "/{userId}". The URI parameter "userId" is explicitly declared, and given a displayName "User ID" and an integer type.
+A resource MAY contain a *uriParameters* property specifying the uriParameters in that resource's relative URI, as described in the [Named Parameters section](#named-parameters) of this specification. The example below shows two top-level resources (/user and /users) and a nested resource specified by its template URI, "/{userId}". The URI parameter "userId" is explicitly declared, and given a displayName "User ID" and an integer type.
 
 ```yaml
 #%RAML 0.8
@@ -533,7 +530,7 @@ baseUri: https://api.github.com
        type: integer
 ```
 
-If a URI parameter in a resource's relative URI is not explicitly described in a uriParameters property for that resource, it MUST still be treated as a URI parameter with defaults as specified in the Named Parameters section of this specification. Its type is "string", it is required, and its displayName is its name (i.e. without the surrounding curly brackets [{] and [}]). In the example below, the top-level resource has two URI parameters, "folderId" and "fileId".
+If a URI parameter in a resource's relative URI is not explicitly described in a uriParameters property for that resource, it MUST still be treated as a URI parameter with defaults as specified in the [Named Parameters section](#named-parameters) of this specification. Its type is "string", it is required, and its displayName is its name (i.e. without the surrounding curly brackets [{] and [}]). In the example below, the top-level resource has two URI parameters, "folderId" and "fileId".
 
 ```yaml
 #%RAML 0.8
@@ -562,7 +559,7 @@ Although URI parameters can be explicitly specified to be optional, they SHOULD 
 
 #### Base URI parameters
 
-A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.  
+A resource or a method can override a base URI template's values. This is useful to restrict or change the default or parameter selection in the base URI. The *baseUriParameters* property MAY be used to override any or all parameters defined at the root level *baseUriParameters* property, as well as base URI parameters not specified at the root level.
 
 In the following example, calls to the /files resource must be made to "https://api-content.dropbox.com/{version}". All other calls in the API are made to "https://api.dropbox.com/{version}".
 
@@ -585,7 +582,7 @@ baseUriParameters:
       enum: [ "api-content" ]
 ```
 
-In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/user/{userId}/image` overrides the definition made in `/users`.
+In a resource structure of resources and nested resources with their methods, the most specific baseUriParameter fully overrides any baseUriParameter definition made before. In the following example the resource `/users/{userId}/image` overrides the definition made in `/users`.
 
 ```
 #%RAML 0.8
@@ -604,7 +601,7 @@ baseUri: https://{apiDomain}.someapi.com
         enum: [ "static" ]
 ```
 
-In the following example, the `PUT` method overrides the definition made in `/user/{userId}/image`.
+In the following example, the `PUT` method overrides the definition made in `/users/{userId}/image`.
 
 ```
 #%RAML 0.8
@@ -622,16 +619,16 @@ baseUri: https://{apiDomain}.someapi.com
       apiDomain:
         enum: [ "static" ]
     get:
-      displayName: retrieve a user's picture
+      description: retrieve a user's picture
     put:
-      displayName: update a user's picture
+      description: update a user's picture
       baseUriParameters:
         apiDomain:
           enum: [ "content-update" ]
 
 ```
 
-The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is ued in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment.
+The special baseUriParameter *version* is reserved; processing applications MUST replace occurrences of {version} in any baseUri property values with the value of the root-level *version* property. The {version} parameter, if used in a baseUri, is required: if it is used in a baseUri, the *version* root-level property MUST be provided and MUST be a valid non-empty URI fragment.
 
 #### Absolute URI
 
@@ -733,7 +730,7 @@ baseUri: https://app.zencoder.com/api/{version}
 
 An API's methods MAY support or require non-standard HTTP headers. In the API definition, specify the non-standard HTTP headers by using the *headers* property.
 
-The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#name-parameters).
+The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#named-parameters).
 
 This example shows a POST method with an HTTP header.
 
@@ -750,9 +747,9 @@ baseUri: https://app.zencoder.com/api/{version}
         displayName: ZEncoder API Key
 ```
 
-If the header name contains the placeholder token {*}, processing applications MUST allow requests to send any number of headers that conform to the format specified, with {*} replaced by 0 or more valid header characters, and offer a way for implementations to add an arbitrary number of such headers. This is particularly useful for APIs that allow HTTP headers that conform to custom naming conventions to send arbitrary, custom data.
+If the header name contains the placeholder token {\*}, processing applications MUST allow requests to send any number of headers that conform to the format specified, with {\*} replaced by 0 or more valid header characters, and offer a way for implementations to add an arbitrary number of such headers. This is particularly useful for APIs that allow HTTP headers that conform to custom naming conventions to send arbitrary, custom data.
 
-In the following example, the header x-metadata-{*} is used to send metadata that will be saved with the job.
+In the following example, the header x-metadata-{\*} is used to send metadata that will be saved with the job.
 
 ```yaml
 #%RAML 0.8
@@ -938,7 +935,7 @@ The *schema* key CANNOT be specified if a body's media type is *application/x-ww
 
 All parsers of RAML MUST be able to interpret JSON Schema [JSON_SCHEMA] and XML Schema [XML_SCHEMA].
 
-Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple miles in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
+Schema MAY be declared inline or in an external file. However, if the schema is sufficiently large so as to make it difficult for a person to read the API definition, or the schema is reused across multiple APIs or across multiple files in the same API, the !include user-defined data type SHOULD be used instead of including the content inline.
 
 This example shows an inline schema declaration.
 
@@ -976,7 +973,7 @@ This example shows an inline schema declaration.
           }
 ```
 
-Alternatively, the value of the *schema* field MAY be the name of a schema specified in the root-level *schemas* property (see [Named Parameters](#named-parameters), or it MAY be declared in an external file and included by using the by using the RAML !include user-defined data type.
+Alternatively, the value of the *schema* field MAY be the name of a schema specified in the root-level *schemas* property (see [Named Parameters](#named-parameters), or it MAY be declared in an external file and included by using the RAML !include user-defined data type.
 
 This example repeats the /jobs resource definition, but with the schemas defined in the external files job.xsd and job.schema.json.
 
@@ -1041,7 +1038,7 @@ Responses MUST be a map of one or more HTTP status codes, where each status code
 
 Each response MAY contain a *body* property, which conforms to the same structure as request *body* properties (see [Body](#body)). Responses that can return more than one response code MAY therefore have multiple bodies defined.
 
-For APIs without *a priori* knowledge of the response types for their responses, "\*/\*" MAY be used to indicate that responses that do not matching other defined data types MUST be accepted. Processing applications MUST match the most descriptive media type first if "\*/\*" is used.
+For APIs without *a priori* knowledge of the response types for their responses, "\*/\*" MAY be used to indicate that responses that do not match other defined data types MUST be accepted. Processing applications MUST match the most descriptive media type first if "\*/\*" is used.
 
 ```yaml
 /media/{mediaid}/content:
@@ -1053,8 +1050,6 @@ For APIs without *a priori* knowledge of the response types for their responses,
       200:
         body:
           "*/*":
-            description: |
-                Returns the media file.
 ```
 
 Responses MAY contain a *description* property that further clarifies why the response was emitted. Response descriptions are particularly useful for describing error conditions.
@@ -1100,7 +1095,7 @@ This example shows a resource GET method that responds with separate codes and b
 
 An API's methods may support custom header values in responses. The custom, non-standard HTTP headers MUST be specified by the *headers* property.
 
-The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#name-parameters).
+The *headers* property is a map in which the key is the name of the header, and the value is itself a map specifying the header attributes, according to the [Named Parameters section](#named-parameters).
 
 This example shows a 503 error response that includes a custom header.
 
@@ -1120,7 +1115,7 @@ This example shows a 503 error response that includes a custom header.
             description: |
               The number of seconds to wait before you can attempt to make a request again.
             type: integer
-            required: yes
+            required: true
             minimum: 1
             maximum: 3600
             example: 34
@@ -1152,7 +1147,7 @@ In the following example, the header x-metadata-{?} is used to send metadata tha
 
 Resource and method declarations are frequently repetitive. For example, if an API requires OAuth authentication, the API definition must include the *access_token* query string parameter (which is defined by the *queryParameters* property) in all the API's resource method declarations.
 
-Moreover, there are many advantages to reusing patterns across multiple resources and methods. For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encouraging consistency and reduces complexity for both servers and clients.
+Moreover, there are many advantages to reusing patterns across multiple resources and methods. For example, after defining a collection-type resource's characteristics, that definition can be applied to multiple resources. This use of patterns encourages consistency and reduces complexity for both servers and clients.
 
 A *resource type* is a partial resource definition that, like a resource, can specify a description and methods and their properties. Resources that use a resource type inherit its properties, such as its methods.
 
@@ -1192,7 +1187,7 @@ traits:
           required: true
 ```
 
-The following example builds on the previous one, but the the resource types and traits are defined in external files that are included by using the RAML !include data type.
+The following example builds on the previous one, but the resource types and traits are defined in external files that are included by using the RAML !include data type.
 
 ```yaml
 #%RAML 0.8
@@ -1267,8 +1262,8 @@ title: Example API
 version: v1
 mediaType: application/json
 schemas:
-  users: !include schemas/users.json
-  user: !include schemas/user.json
+  - users: !include schemas/users.json
+  - user: !include schemas/user.json
 resourceTypes:
   - collection:
       get:
@@ -1444,7 +1439,7 @@ securitySchemes:
           tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
     - customHeader:
         description:|
-            A custom  
+            A custom
 ```
 
 ##### Description
@@ -1466,7 +1461,7 @@ The *type* attribute MAY be used to convey information about authentication flow
 A processing application's developers MAY provide support for these mechanisms. If a mechanism is supported, it MUST conform to specified standard.
 
 ##### describedBy
-The *describedBy* attribute MAY be used to apply a trait-like structure to a security scheme mechanism so as to extend the mechanism, such as specifying response codes, HTTP headers or custom documentation.  
+The *describedBy* attribute MAY be used to apply a trait-like structure to a security scheme mechanism so as to extend the mechanism, such as specifying response codes, HTTP headers or custom documentation.
 
 This extension allows API designers to describe security schemes. As a best practice, even for standard security schemes, API designers SHOULD describe the security schemes' required artifacts, such as headers, URI parameters, and so on. Including the security schemes' description completes an API's documentation.
 
@@ -1497,7 +1492,7 @@ If the scheme's type is *x-other*, API designers can use the properties in this 
 ### Usage: Applying a Security Scheme to an API
 To apply a *securityScheme* definition to every method in an API, the API MAY be defined using the *securedBy* attribute. This specifies that all methods in the API are protected using that security scheme.
 
-Applying a *securityScheme* definition to a method overrides whichever *securityScheme* has been defined at the root level. To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the *securedBy* attribute. The value of the *securedBy* attribute MUST be a list of any of the security schemas defined in the *securitySchema* declaration.
+Applying a *securityScheme* definition to a method overrides whichever *securityScheme* has been defined at the root level. To indicate that the method is protected using a specific security scheme, the method MUST be defined by using the *securedBy* attribute. The value of the *securedBy* attribute MUST be a list of any of the security schemes defined in the *securitySchemes* declaration.
 
 ```yaml
 #%RAML 0.8

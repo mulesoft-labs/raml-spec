@@ -1,73 +1,67 @@
 # The RESTful API Modeling Language (RAML) Spec
 
-###Licensing
-[Contributors License Agreement](https://github.com/raml-org/raml-spec/blob/master/legal/contribution_agreement.docx)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/raml-org/raml-spec)
 
-[Branding Guidelines](https://github.com/raml-org/raml-spec/blob/master/legal/brand_guidelines.pdf)
+**The current version of the RAML specification is 1.0 - and you can find it [here](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md).**
 
-## Index
+RAML is a language for the definition of HTTP-based APIs that embody most or all of the principles of Representational State Transfer (REST). The RAML specification (this document) defines an application of the [YAML 1.2 specification](http://yaml.org/spec/1.2/spec.html) that provides mechanisms for the definition of practically-RESTful APIs, while providing provisions with which source code generators for client and server source code and comprehensive user documentation can be created.
 
-###[Introduction:](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#introduction)
-[RAML Overview](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#overview)  
-[RAML Markup Language](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#markup-language)
+Why not pay us a visit on [raml.org](http://www.raml.org)? You will find tons of information around RAML such as a tutorial, what the RAML Workgroup is, RAML projects, a forum, and a lot more.
 
-####[Includes](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#includes)
+## What is the fastest way to get started?
 
-Named Parameters:
+All you need is an editor of your choice - we recommend either MuleSoft's [API Designer](https://github.com/mulesoft/api-designer) or [API Workbench](http://apiworkbench.com/); but any text editor will do just fine.
 
-[Named Parameters with Multiple Types](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#named-parameters-with-multiple-types)
+Now you only need to do is to write the design for your first endpoint
 
-Basic Information:
+```yaml
+#%RAML 1.0
+title: Hello world # required title
 
-[Root](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#root-section)  
-[Base URI and baseUriParameters](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#base-uri-and-baseuriparameters)  
-[Protocols](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#protocols)  
-[Default Media Type](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#default-media-type)  
-[Schemas](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#schemas)  
-[URI Parameters](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#uri-parameters)  
-[User Documentation](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#user-documentation)
+/greeting: # optional resource
+  get: # HTTP method declaration
+    responses: # declare a response
+      200: # HTTP status code
+        body: # declare content of response
+          application/json: # media type
+            # structural definition of a response (schema or type)
+            type: object
+            properties:
+              message: string
+            example: # example how a response looks like
+              message: "Hello world"
+```
 
-Resources and Methods:
+Interested? Learn more about the syntax in the [RAML 1.0 specification](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md) or take a look at some [examples](https://github.com/raml-org/raml-examples).
 
-[Resources and Nested Resources](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#resources-and-nested-resources)  
-[Template URIs and URI Parameters](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#template-uris-and-uri-parameters)
-[Absolute URI](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#absolute-uri)  
-[Query Parameters](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#query-strings)  
-[Body](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#body)  
-[Web Forms](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#web-forms)  
+## How do I learn more?
 
-Schemas and Responses:
+* [Tutorial](http://raml.org/developers/raml-100-tutorial) - In progress to be updated to 1.0
+* [Advanced Tutorial](http://raml.org/developers/raml-200-tutorial) - In progress to be updated to 1.0
+* [Community Sneak Peaks](http://forums.raml.org/c/sneak-peek)
+* [RAML MVP Program](http://raml.influitive.com/) - Currently in beta
+* [Examples](https://github.com/raml-org/raml-examples)
+* [Wiki](https://github.com/raml-org/raml-spec/wiki)
+* [Projects](http://www.raml.org/projects/projects)
 
-[Schemas](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#schema)  
-[Responses](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#responses)  
-[Headers](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#headers)
+## How can I contribute?
 
-Security:
+We welcome any contributions from the community! You can contribute or provide feedback for the RAML Specification in different ways depending on your intentions. The following table illustrates the different ways to help us not only to improve the documentation of the specification, but also RAML itself.
 
-[Declaration](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#declaration)  
-[Type](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#type)  
-[OAuth 1.0](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#oauth-10)  
-[OAuth 2.0](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#oauth-20)  
-[Usage: Applying a Security Scheme to an API](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#usage-applying-a-security-scheme-to-an-api)
+|Your Intention  |What to do?|
+|:----------|:----------|
+|You see a spelling or grammar mistake, or an error in our examples? | Fork this repository, make edits, and then submit a pull request. We will respond to your request as quickly as possible.
+|You want to suggest a new feature, improve existing features, ask questions, or things general around the RAML specification? | File an issue. Please be as specific as possible about your intentions or what you’d like to see.
 
-###[References:](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#references)
-[Normative References](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#normative-references)  
-[Informative References](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md#informative-references)
+## How can I get in touch?
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/2c379a9b36749a80379d5f3f328a8bed "githalytics.com")](http://githalytics.com/raml-org/raml-spec)
+* [@ramlapi](https://twitter.com/ramlapi)
+* info@raml.org
+* [forum](http://forums.raml.org)
+* [chat](https://gitter.im/raml-org/raml-spec)
+* [Stack Overflow](http://stackoverflow.com/questions/tagged/raml)
+* [Github Issues](https://github.com/raml-org/raml-spec/issues)
 
-##Contributing
+## Licensing
 
-Please, follow these steps to contribute with the RAML Spec project:
-- Check the [Contributors License Agreement](https://github.com/raml-org/raml-spec/blob/master/legal/contribution_agreement.docx)
-- Fork this repository.
-- Clone the forked repository.
-- Apply the changes on master.
-- Commit, Push.
-- Generate Pull Request.
-
-Please, follow these steps to accept a contribution
-- Verify the Pull Request.
-- If it's correct: Merge/Accept.
-- Move to `gh-pages` branch (`git checkout gh-pages`)  and run `./specs_publish.sh` (this script copies the resulting `raml-0.8.md` file from `master` to the current branch
-  `gh-pages`  and places it in the following path: `./spec.md` which is needed to have the specs published in the site). **Note: This is a shell script, only working on UNIX based OS**.
+[Branding Guidelines](http://raml.org/licensing.html)
