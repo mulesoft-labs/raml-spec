@@ -1,4 +1,4 @@
-# RAML Version 1.0: RESTful API Modeling Language
+# RESTful API Modeling Language (RAML) 1.0
 
 ## Abstract
 
@@ -6,158 +6,25 @@ RAML is a language for the definition of HTTP-based APIs that embody most or all
 
 ## Status of this Document
 
+_This section describes the status of this document at the time of its publication. Other documents may supersede this document._
+
 This document constitutes the RAML 1.0 specification. The consensus of specification authors and RAML 0.8 users determines the contents of this document. We strongly recommend that implementers and users of the RAML 0.8 specification update their software and API definitions to the RAML 1.0 specification.
-
-## Terminology and Conformance Language
-
-Normative text describes one or both of the following kinds of elements:
-
-* Vital elements of the specification
-* Elements that contain the conformance language key words as defined by [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Key words for use in RFCs to Indicate Requirement Levels"
-
-Informative text is potentially helpful to the user, but dispensable. Informative text can be changed, added, or deleted editorially without negatively affecting the implementation of the specification. Informative text does not contain conformance keywords.
-
-All text in this document is, by default, normative.
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Key words for use in RFCs to Indicate Requirement Levels".
-
-## Definitions and Terminology
-
-### General
-
-In this specification, **API definition** means an API using this specification.
-
-**RAML Specification** refers to this document.
-
-**REST** is used in the context of an API implemented using some or all of the principles of REST (Representational State Transfer), which was introduced and first defined in 2000 in Chapter 5, [REST](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm), of the doctoral dissertation *"Architectural Styles and the Design of Network-based Software Architecture"* by Roy Fielding.
-
-A **resource** is the conceptual mapping to an entity or set of entities.
-
-A trailing question mark, for example **description?**, indicates an optional property.
-
-### Template URI
-
-A template URI refers to a URI parameter, which is a variable element, enclosed in curly brackets (`{}`) inside a relative URI of a resource.
-
-RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/rfc6570) for URI Templates.
-
-### Markdown
-
-Throughout this specification, **Markdown** means [GitHub-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
-
-## Table of Content
-
-<!-- TOC -->
-
-- [Introduction](#introduction)
-- [What's New and Different in RAML 1.0](#whats-new-and-different-in-raml-10)
-- [Markup Language](#markup-language)
-- [The Root of the Document](#the-root-of-the-document)
-	- [User Documentation](#user-documentation)
-	- [Base URI and Base URI Parameters](#base-uri-and-base-uri-parameters)
-	- [Protocols](#protocols)
-	- [Default Media Types](#default-media-types)
-	- [Default Security](#default-security)
-- [RAML Data Types](#raml-data-types)
-	- [Introduction](#introduction)
-	- [Overview](#overview)
-	- [Defining Types](#defining-types)
-	- [Type Declarations](#type-declarations)
-	- [Built-in Types](#built-in-types)
-		- [The "Any" Type](#the-any-type)
-		- [Object Type](#object-type)
-			- [Property Declarations](#property-declarations)
-			- [Additional Properties](#additional-properties)
-			- [Object Type Specialization](#object-type-specialization)
-			- [Using Discriminator](#using-discriminator)
-		- [Array Type](#array-type)
-		- [Scalar Types](#scalar-types)
-			- [String](#string)
-			- [Number](#number)
-			- [Integer](#integer)
-			- [Boolean](#boolean)
-			- [Date](#date)
-			- [File](#file)
-			- [Nil Type](#nil-type)
-		- [Union Type](#union-type)
-		- [Using XML and JSON Schema](#using-xml-and-json-schema)
-	- [User-defined Facets](#user-defined-facets)
-	- [Determine Default Types](#determine-default-types)
-	- [Type Expressions](#type-expressions)
-	- [Multiple Inheritance](#multiple-inheritance)
-	- [Inline Type Declarations](#inline-type-declarations)
-	- [Defining Examples in RAML](#defining-examples-in-raml)
-		- [Multiple Examples](#multiple-examples)
-		- [Single Example](#single-example)
-		- [Example of how to define example/examples in RAML](#example-of-how-to-define-exampleexamples-in-raml)
-	- [XML Serialization of Type Instances](#xml-serialization-of-type-instances)
-	- [Using Types in RAML](#using-types-in-raml)
-- [Resources and Nested Resources](#resources-and-nested-resources)
-	- [Resource Property](#resource-property)
-	- [Template URIs and URI Parameters](#template-uris-and-uri-parameters)
-- [Methods](#methods)
-	- [Headers](#headers)
-	- [Query Strings and Query Parameters](#query-strings-and-query-parameters)
-		- [The Query String as a Whole](#the-query-string-as-a-whole)
-		- [Query Parameters in a Query String](#query-parameters-in-a-query-string)
-	- [Bodies](#bodies)
-- [Responses](#responses)
-- [Resource Types and Traits](#resource-types-and-traits)
-	- [Declaring Resource Types and Traits](#declaring-resource-types-and-traits)
-	- [Applying Resource Types and Traits](#applying-resource-types-and-traits)
-	- [Resource Type and Trait Parameters](#resource-type-and-trait-parameters)
-	- [Declaring HTTP Methods as Optional](#declaring-http-methods-as-optional)
-	- [Algorithm of Merging Traits and Methods](#algorithm-of-merging-traits-and-methods)
-	- [Resource Types and Traits Effect on Collections](#resource-types-and-traits-effect-on-collections)
-- [Security Schemes](#security-schemes)
-	- [Security Scheme Types](#security-scheme-types)
-	- [Security Scheme Declaration](#security-scheme-declaration)
-		- [describedBy](#describedby)
-		- [Settings](#settings)
-			- [OAuth 1.0](#oauth-10)
-			- [OAuth 2.0](#oauth-20)
-			- [Basic Authentication](#basic-authentication)
-			- [Digest Authentication](#digest-authentication)
-			- [Pass Through](#pass-through)
-			- [x-&lt;other&gt;](#x-other)
-		- [Applying Security Schemes](#applying-security-schemes)
-- [Annotations](#annotations)
-	- [Declaring Annotation Types](#declaring-annotation-types)
-	- [Applying Annotations](#applying-annotations)
-		- [Annotating Scalar-valued Nodes](#annotating-scalar-valued-nodes)
-		- [Annotation Targets](#annotation-targets)
-- [Modularization](#modularization)
-	- [Includes](#includes)
-		- [Typed Fragments](#typed-fragments)
-		- [Resolving Includes](#resolving-includes)
-	- [Libraries](#libraries)
-	- [Overlays and Extensions](#overlays-and-extensions)
-		- [Overlays](#overlays)
-		- [Extensions](#extensions)
-		- [Merging Rules](#merging-rules)
-- [References](#references)
-
-<!-- /TOC -->
 
 ## Introduction
 
-This specification describes the RESTful API Modeling Language (RAML). RAML is a human- and machine-readable language for the definition of a RESTful application programming interface (API). RAML is designed to improve the specification of the API by providing a format that the API provider and API consumers can use as a mutual contract. RAML can, for example, facilitate providing user documentation and source code stubs for client and server implementations. Such provisions streamline and enhance the definition and development of interoperable applications that utilize RESTful APIs.
+This specification describes the RESTful API Modeling Language (RAML). RAML is a human- and machine-readable language for the definition of a RESTful application programming interface (API). 
+
+RAML is designed to improve the specification of the API by providing a format that the API provider and API consumers can use as a mutual contract. RAML can, for example, facilitate providing user documentation and source code stubs for client and server implementations. Such provisions streamline and enhance the definition and development of interoperable applications that utilize RESTful APIs.
 
 RAML introduces the innovative concept of resource types and traits for characterizing and reusing patterns of resources and associated methods. Using resource types and traits minimizes the repetition in a RESTful API design and promotes consistency within and across APIs.
 
-This document is organized as follows:
+Chapter 1, RAML Documents, presents the basic RAML syntax to describe an HTTP API.
 
-* **Basic Information**. How to describe core aspects of the API, such as its name, title, location (or URI), and defaults and how to include supporting documentation for the API.
-* **Data Types**. Modeling API data through a streamlined type system that encompasses JSON and XML Schema.
-* **Resources**. How to specify API resources and nested resources, as well as URI parameters in any URI templates.
-* **Methods**. How to specify the methods on API resources and their request headers, query parameters, and request bodies.
-* **Responses**. The specification of API responses, including status codes, media types, response headers, and response bodies.
-* **Resource Types and Traits**. The optional use of RAML resource types and traits to characterize resources.
-* **Security**. Specifying an API security scheme in RAML.
-* **Annotations**. Extending a RAML specification by defining strongly-typed annotations and applying them throughout the specification.
-* **Includes, Libraries, Overlays, and Extensions**. How an API definition can consist of externalized definition documents, packaging collections of such definitions into libraries, separating and overlaying layers of metadata on a RAML document, and extending an API specification with additional functionality.
+Chapter 2, RAML Modularity, introduces mechanisms to separate logical units from a RAML document that can be shared and reused.  
 
-## What's New and Different in RAML 1.0
+Chapter 3, RAML Data Types, discusses a modeling approach for API data through a streamlined type system. 
+
+### An Introduction to Version 1.0
 
 * **Data types**: a unified, streamlined, and powerful way to model data wherever it appears in an API.
   * Uniformly covers bodies, URI parameters, headers, and query parameters and eliminates the need for a separate formParameters construct
@@ -171,6 +38,88 @@ This document is organized as follows:
   * Wider OAuth support
   * Support for pass-through (key-based) security schemes
 * **Several smaller changes** for consistency and expressivity
+
+### Notational Conventions and Terminology
+
+Unless otherwise noted, the entire text of this specification is normative. Exceptions include:
+
+* notes
+* sections explicitly marked non-normative
+* examples and their commentary
+* informal descriptions of the consequences of rules formally and normatively stated elsewhere (such informal descriptions are typically introduced by phrases like "Informally, ..." or "It is a consequence of ... that ...")
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [IETF RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) "Key words for use in RFCs to Indicate Requirement Levels".
+
+In this specification, **API definition** means an API using this specification.
+
+**RAML Specification** refers to this document.
+
+**REST** is used in the context of an API implemented using some or all of the principles of REST (Representational State Transfer), which was introduced and first defined in 2000 in Chapter 5, [REST](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm), of the doctoral dissertation *"Architectural Styles and the Design of Network-based Software Architecture"* by Roy Fielding.
+
+A **resource** is the conceptual mapping to an entity or set of entities.
+
+A trailing question mark, for example **description?**, indicates an optional property.
+
+Throughout this document, **Markdown** means [GitHub-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
+
+A **template URI** refers to a URI parameter, which is a variable element, enclosed in curly brackets (`{}`) inside a relative URI of a resource. RAML fully supports Level 2 as defined in [RFC6570](https://tools.ietf.org/html/rfc6570) for URI Templates.
+
+### A Simple Example
+
+Below is a RAML document that describes a simple Banking HTTP API. The root of this RAML document defines the `title` of the API, its `version`, a default `mediaType` that will be applied across the entire document for all payload data, and a root resource called `/customers`.
+
+The RAML document also defines sub resources for `/customers` to `get` a specific customer using `/{customer_id}` and all associated `/accounts`. Additionally, you can `post` a new account. 
+
+Furthermore, all `get` methods define successful `responses` with `200`.
+
+```yaml
+#%RAML 1.0
+
+title: ACME Banking HTTP API
+version: 1.0
+mediaType: application/json
+
+/customers:
+  displayName: Customer Resource
+  /{customer_id}:
+    get:
+      description: Returns customer data
+      responses:
+        200:
+          body:
+    /accounts:
+      get:
+        description: Returns a collection of accounts
+        responses:
+          200:
+            body:
+      post:
+        description: Requests the creation of a new account
+        body:
+```
+
+## Chapter 1: RAML Documents
+
+A RAML document uses [YAML 1.2](http://www.yaml.org/spec/1.2/spec.html) as its underlying format. YAML is a human-readable data format that aligns well with the design goals of this specification. As in YAML, all nodes such as keys, values, and tags, are case-sensitive.
+
+RAML API definitions are YAML 1.2-compliant documents that begin with a REQUIRED YAML-comment line that indicates the RAML version, as follows:
+
+```yaml
+#%RAML 1.0
+```
+
+The first line of a RAML API definition document MUST begin with the text _#%RAML_ followed by a single space followed by the text _1.0_ and nothing else before the end of the line.
+
+The media type _application/raml+yaml_ and its associated file extension _.raml_ SHALL be used for any RAML document.
+
+To facilitate the automated processing of RAML documents, RAML imposes the following restrictions and requirements in addition to the core YAML 1.2 specification:
+
+* The first line of a RAML document consists of a YAML comment that specifies the RAML version. Therefore, RAML processors cannot completely ignore all YAML comments.
+* The order of some properties at certain levels within a RAML document is significant. Therefore, processors are expected to preserve this ordering.
+
+
+
+
 
 ## Markup Language
 
